@@ -15,6 +15,9 @@ def getWeather(weatherUrl):
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text, 'html.parser')
     elems = soup.select('#daylink-0 > div.wr-day__body > div.wr-day__details-container > div > div.wr-day__temperature > div > div.wr-day-temperature__high > span.wr-day-temperature__high-value > span > span.wr-value--temperature--c')
+    if elems == []:
+        raise Exception ("This css selector does not work for the webpage")
+        #sometime the css selector may not work as the page is updated regularly
     return elems[0].text.strip()
 
 def getDescrip(weatherUrl):
@@ -22,6 +25,9 @@ def getDescrip(weatherUrl):
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text, 'html.parser')
     elems = soup.select('#daylink-0 > div.wr-day__body > div.wr-day__weather-type-description-container > div')
+    if elems == []:
+        raise Exception ("This css selector does not work for the webpage")
+        #sometime the css selector may not work as the page is updated regularly
     return elems[0].text.strip()
 
 #daylink-0 > div.wr-day__body > div.wr-day__details-container > div > div.wr-day__temperature > div > div > span.wr-day-temperature__low-value > span > span.wr-value--temperature--c
